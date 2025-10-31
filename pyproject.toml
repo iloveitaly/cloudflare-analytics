@@ -1,11 +1,15 @@
 [project]
 name = "cloudflare-analytics"
 version = "0.1.0"
-description = ""
-keywords = []
+description = "Cloudflare Analytics GraphQL API client"
+keywords = ["cloudflare", "analytics", "graphql"]
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = []
+dependencies = [
+    "httpx>=0.27.0",
+    "pydantic>=2.0.0",
+    "tenacity>=8.0.0",
+]
 authors = [{ name = "Michael Bianco", email = "mike@mikebian.co" }]
 urls = { "Repository" = "https://github.com/iloveitaly/cloudflare-analytics" }
 
