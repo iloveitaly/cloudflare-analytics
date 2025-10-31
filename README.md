@@ -1,20 +1,19 @@
 # Cloudflare Analytics Client
 
-A Python client for interacting with the Cloudflare GraphQL Analytics API.
+A Python client for interacting with the [Cloudflare GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/).
+
+> **Note:** The official Cloudflare Python library does not support the GraphQL Analytics API endpoints. This library provides dedicated support for querying Cloudflare analytics data.
 
 ## Installation
 
 ```bash
-pip install cloudflare-analytics
+uv add cloudflare-analytics
 ```
 
 ## Usage
 
 ```python
-from cloudflare_analytics import CloudflareAnalyticsClient
-
-# Initialize the client
-client = CloudflareAnalyticsClient(api_token="your_cloudflare_api_token")
+from cloudflare_analytics import client
 
 # Execute a GraphQL query
 query = '''
@@ -39,7 +38,8 @@ response = client.query(
         "accountTag": "your_account_id",
         "start": "2025-10-01",
         "end": "2025-10-28"
-    }
+    },
+    api_token="your_cloudflare_api_token"
 )
 
 if response.errors:
@@ -59,7 +59,6 @@ elif response.data:
 - Type-safe responses using Pydantic models
 - Comprehensive error handling
 
-## API Documentation
+## License
 
-For more information about the Cloudflare Analytics API, see:
-https://developers.cloudflare.com/analytics/graphql-api/
+[MIT License](LICENSE.md)
