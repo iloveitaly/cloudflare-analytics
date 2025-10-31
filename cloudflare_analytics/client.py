@@ -17,7 +17,7 @@ from tenacity import (
     wait_exponential,
 )
 
-from app import log
+logger = logging.getLogger(__name__)
 
 _analytics_client: "CloudflareAnalyticsClient | None" = None
 
@@ -33,9 +33,9 @@ class CloudflareAnalyticsClient:
 
     Example usage:
 
-        from app.lib.cloudflare import get_analytics_client
+        from cloudflare_analytics import CloudflareAnalyticsClient
 
-        client = get_analytics_client()
+        client = CloudflareAnalyticsClient(api_token="your_token")
 
         query = '''
         query GetStreamMinutes($accountTag: string!, $start: Date, $end: Date) {
@@ -63,13 +63,13 @@ class CloudflareAnalyticsClient:
         )
 
         if response.errors:
-            log.error("graphql errors", errors=response.errors)
+            logger.error("graphql errors", extra={"errors": response.errors})
         elif response.data:
             groups = response.data["viewer"]["accounts"][0]["streamMinutesViewedAdaptiveGroups"]
             for group in groups:
                 minutes = group["sum"]["minutesViewed"]
                 date = group["dimensions"]["date"]
-                log.info("stream data", date=date, minutes=minutes)
+                logger.info("stream data", extra={"date": date, "minutes": minutes})
     """
 
     def __init__(self, api_token: str):
@@ -83,7 +83,7 @@ class CloudflareAnalyticsClient:
         stop=stop_after_attempt(6),
         wait=wait_exponential(multiplier=1, min=0, max=32),
         retry=retry_if_exception_type(httpx.HTTPError),
-        before_sleep=before_sleep_log(logging.getLogger(__name__), logging.INFO),
+        before_sleep=before_sleep_log(logger, logging.INFO),
         reraise=True,
     )
     def _make_request(self, payload: dict[str, Any]) -> dict[str, Any]:
@@ -99,13 +99,17 @@ class CloudflareAnalyticsClient:
         url = f"{self.base_url}/graphql"
         headers = {"Authorization": f"Bearer {self.api_token}"}
 
-        log.debug("cloudflare graphql request", url=url, payload=payload)
+        logger.debug(
+            "cloudflare graphql request", extra={"url": url, "payload": payload}
+        )
 
         response = httpx.post(url, json=payload, headers=headers)
         response.raise_for_status()
 
         json_data = response.json()
-        log.info("cloudflare graphql response", status=response.status_code)
+        logger.info(
+            "cloudflare graphql response", extra={"status": response.status_code}
+        )
 
         return json_data
 
@@ -124,7 +128,7 @@ class CloudflareAnalyticsClient:
         Raises:
             httpx.HTTPError: If the request fails after retries
         """
-        payload = {"query": query}
+        payload: dict[str, Any] = {"query": query}
         if variables:
             payload["variables"] = variables
 
@@ -135,9 +139,12 @@ class CloudflareAnalyticsClient:
         )
 
 
-def get_analytics_client() -> CloudflareAnalyticsClient:
+def get_analytics_client(api_token: str) -> CloudflareAnalyticsClient:
     """
     Get or create the global Cloudflare Analytics client instance.
+
+    Args:
+        api_token: Cloudflare API token
 
     Returns:
         CloudflareAnalyticsClient: The configured analytics client instance
@@ -145,8 +152,6 @@ def get_analytics_client() -> CloudflareAnalyticsClient:
     global _analytics_client
 
     if _analytics_client is None:
-        from app.configuration.cloudflare import CLOUDFLARE_API_TOKEN
-
-        _analytics_client = CloudflareAnalyticsClient(api_token=CLOUDFLARE_API_TOKEN)
+        _analytics_client = CloudflareAnalyticsClient(api_token=api_token)
 
     return _analytics_client
