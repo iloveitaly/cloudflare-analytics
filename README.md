@@ -1,4 +1,4 @@
-# Cloudflare Analytics Client
+# Python Cloudflare Analytics Client
 
 A Python client for interacting with the [Cloudflare GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/).
 
@@ -59,6 +59,4 @@ elif response.data:
 - Type-safe responses using Pydantic models
 - Comprehensive error handling
 
-## License
-
-[MIT License](LICENSE.md)
+## [MIT License](LICENSE.md)
