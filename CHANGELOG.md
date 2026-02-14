@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/iloveitaly/cloudflare-analytics/compare/v0.1.1...v0.2.0) (2026-02-14)
+
+
+### Features
+
+* **client:** support env token in get_analytics_client ([af59bf6](https://github.com/iloveitaly/cloudflare-analytics/commit/af59bf6c61be017ccb2e4ae2e476922294583620))
+
 ## [0.1.1](https://github.com/iloveitaly/cloudflare-analytics/compare/v0.1.0...v0.1.1) (2025-11-01)
 
 
