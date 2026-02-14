@@ -15,4 +15,3 @@ __all__ = [
     "GraphQLResponse",
     "get_analytics_client",
 ]
-
