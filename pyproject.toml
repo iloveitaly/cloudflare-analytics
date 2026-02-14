@@ -1,6 +1,6 @@
 [project]
 name = "cloudflare-analytics"
-version = "0.1.1"
+version = "0.2.0"
 description = "Cloudflare Analytics GraphQL API client"
 keywords = ["cloudflare", "analytics", "graphql"]
 readme = "README.md"
