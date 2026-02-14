@@ -17,9 +17,37 @@ uv add cloudflare-analytics
 
 ## Usage
 
-```python
-from cloudflare_analytics import client
+There are two ways to initialize the client:
 
+### Option 1: Global Client (Recommended)
+
+`get_analytics_client` returns a globally cached singleton instance. It also automatically checks for the `CLOUDFLARE_API_TOKEN` environment variable if no token is passed.
+
+```python
+from cloudflare_analytics import get_analytics_client
+
+# Uses CLOUDFLARE_API_TOKEN environment variable by default
+client = get_analytics_client()
+
+# Or pass it explicitly
+client = get_analytics_client(api_token="your_cloudflare_api_token")
+```
+
+### Option 2: Manual Instantiation
+
+Use `CloudflareAnalyticsClient` directly if you need to manage multiple instances with different tokens or prefer to avoid global state.
+
+```python
+from cloudflare_analytics import CloudflareAnalyticsClient
+
+client = CloudflareAnalyticsClient(api_token="your_cloudflare_api_token")
+```
+
+### Executing a Query
+
+Once you have a client instance, you can execute GraphQL queries:
+
+```python
 # Execute a GraphQL query
 query = '''
 query GetStreamMinutes($accountTag: string!, $start: Date, $end: Date) {
@@ -43,8 +71,7 @@ response = client.query(
         "accountTag": "your_account_id",
         "start": "2025-10-01",
         "end": "2025-10-28"
-    },
-    api_token="your_cloudflare_api_token"
+    }
 )
 
 if response.errors:

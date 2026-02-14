@@ -5,6 +5,7 @@ API docs: https://developers.cloudflare.com/analytics/graphql-api/
 """
 
 import logging
+import os
 from typing import Any
 
 import httpx
@@ -31,11 +32,23 @@ class CloudflareAnalyticsClient:
     """
     Client for interacting with the Cloudflare GraphQL Analytics API using httpx.
 
+    There are two ways to initialize the client:
+
+    1. Using the global client (Recommended):
+       `get_analytics_client()` returns a globally cached singleton instance and
+       automatically checks the `CLOUDFLARE_API_TOKEN` environment variable.
+
+    2. Manual instantiation:
+       Use `CloudflareAnalyticsClient(api_token=...)` directly if you need to manage
+       multiple instances with different tokens.
+
     Example usage:
 
-        from cloudflare_analytics import CloudflareAnalyticsClient
+        from cloudflare_analytics import get_analytics_client
 
-        client = CloudflareAnalyticsClient(api_token="your_token")
+        client = get_analytics_client()
+        # ... or pass explicitly ...
+        # client = get_analytics_client(api_token="your_token")
 
         query = '''
         query GetStreamMinutes($accountTag: string!, $start: Date, $end: Date) {
@@ -139,12 +152,12 @@ class CloudflareAnalyticsClient:
         )
 
 
-def get_analytics_client(api_token: str) -> CloudflareAnalyticsClient:
+def get_analytics_client(api_token: str | None = None) -> CloudflareAnalyticsClient:
     """
     Get or create the global Cloudflare Analytics client instance.
 
     Args:
-        api_token: Cloudflare API token
+        api_token: Cloudflare API token. If not provided, looks for CLOUDFLARE_API_TOKEN env var.
 
     Returns:
         CloudflareAnalyticsClient: The configured analytics client instance
@@ -152,6 +165,11 @@ def get_analytics_client(api_token: str) -> CloudflareAnalyticsClient:
     global _analytics_client
 
     if _analytics_client is None:
-        _analytics_client = CloudflareAnalyticsClient(api_token=api_token)
+        token = api_token or os.environ.get("CLOUDFLARE_API_TOKEN")
+        if not token:
+            raise ValueError(
+                "API token must be provided or set via CLOUDFLARE_API_TOKEN environment variable."
+            )
+        _analytics_client = CloudflareAnalyticsClient(api_token=token)
 
     return _analytics_client
