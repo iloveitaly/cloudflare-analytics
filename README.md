@@ -1,5 +1,10 @@
 # Python Cloudflare Analytics Client
 
+[![Release Notes](https://img.shields.io/github/release/iloveitaly/cloudflare-analytics)](https://github.com/iloveitaly/cloudflare-analytics/releases)
+[![Downloads](https://static.pepy.tech/badge/cloudflare-analytics/month)](https://pepy.tech/project/cloudflare-analytics)
+![GitHub CI Status](https://github.com/iloveitaly/cloudflare-analytics/actions/workflows/build_and_publish.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A Python client for interacting with the [Cloudflare GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/).
 
 > **Note:** The official Cloudflare Python library does not support the GraphQL Analytics API endpoints. This library provides dedicated support for querying Cloudflare analytics data.
@@ -59,4 +64,9 @@ elif response.data:
 - Type-safe responses using Pydantic models
 - Comprehensive error handling
 
+
 ## [MIT License](LICENSE.md)
+
+---
+
+*This project was created from [iloveitaly/python-package-template](https://github.com/iloveitaly/python-package-template)*
