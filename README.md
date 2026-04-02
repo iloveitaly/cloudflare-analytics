@@ -15,6 +15,13 @@ A Python client for interacting with the [Cloudflare GraphQL Analytics API](http
 uv add cloudflare-analytics
 ```
 
+## Features
+
+- Simple, clean API for Cloudflare GraphQL Analytics
+- Built-in retry logic with exponential backoff
+- Type-safe responses using Pydantic models
+- Comprehensive error handling
+
 ## Usage
 
 There are two ways to initialize the client:
@@ -84,13 +91,10 @@ elif response.data:
         print(f"Date: {date}, Minutes: {minutes}")
 ```
 
-## Features
+## Cloudflare API Key Setup
 
-- Simple, clean API for Cloudflare GraphQL Analytics
-- Built-in retry logic with exponential backoff
-- Type-safe responses using Pydantic models
-- Comprehensive error handling
-
+* Manage Account > Account API tokens
+* The easiest way to get the account ID is to log into your dashboard and look at the first UID after the domain in the URL.
 
 ## [MIT License](LICENSE.md)
 
