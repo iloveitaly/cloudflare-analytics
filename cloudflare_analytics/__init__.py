@@ -5,7 +5,6 @@ API docs: https://developers.cloudflare.com/analytics/graphql-api/
 """
 
 import logging
-import os
 
 from .client import CloudflareAnalyticsClient, GraphQLResponse, get_analytics_client
 
