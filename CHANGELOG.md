@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.1](https://github.com/iloveitaly/cloudflare-analytics/compare/v0.2.0...v0.2.1) (2026-04-30)
+
+
+### Bug Fixes
+
+* trigger new release with latest tooling ([a34bead](https://github.com/iloveitaly/cloudflare-analytics/commit/a34bead71ef33a84489ae8a594abf2c863bf93d1))
+
+
+### Documentation
+
+* update README with features and setup instructions ([b2d4991](https://github.com/iloveitaly/cloudflare-analytics/commit/b2d4991757bac39a2c879a675ba05df145c9903e))
+
 ## [0.2.0](https://github.com/iloveitaly/cloudflare-analytics/compare/v0.1.1...v0.2.0) (2026-02-14)
 
 
