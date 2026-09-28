@@ -56,7 +56,7 @@ Once you have a client instance, you can execute GraphQL queries:
 
 ```python
 # Execute a GraphQL query
-query = '''
+query = """
 query GetStreamMinutes($accountTag: string!, $start: Date, $end: Date) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -70,15 +70,15 @@ query GetStreamMinutes($accountTag: string!, $start: Date, $end: Date) {
     }
   }
 }
-'''
+"""
 
 response = client.query(
     query,
     variables={
         "accountTag": "your_account_id",
         "start": "2025-10-01",
-        "end": "2025-10-28"
-    }
+        "end": "2025-10-28",
+    },
 )
 
 if response.errors:

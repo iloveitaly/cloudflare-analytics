@@ -1,8 +1,10 @@
 """Tests for CloudflareAnalyticsClient."""
 
-import pytest
 from unittest.mock import Mock, patch
+
 import httpx
+import pytest
+
 from cloudflare_analytics import CloudflareAnalyticsClient, GraphQLResponse
 
 
