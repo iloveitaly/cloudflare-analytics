@@ -1,6 +1,6 @@
 """Tests for get_analytics_client helper function."""
 
-from cloudflare_analytics import get_analytics_client, CloudflareAnalyticsClient
+from cloudflare_analytics import CloudflareAnalyticsClient, get_analytics_client
 
 
 def test_get_analytics_client_creates_instance():

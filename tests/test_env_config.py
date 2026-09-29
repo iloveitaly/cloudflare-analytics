@@ -1,7 +1,9 @@
 import os
 from unittest.mock import patch
+
 import pytest
-from cloudflare_analytics import get_analytics_client, client
+
+from cloudflare_analytics import client, get_analytics_client
 
 
 def test_get_analytics_client_env_var():
